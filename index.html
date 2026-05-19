@@ -1,4 +1,89 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulta de Notas</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+</head>
+
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+<div class="bg-white shadow-xl rounded-2xl w-full max-w-3xl p-6">
+
+<h1 class="text-3xl font-bold text-center mb-6 text-slate-800">
+Consulta de Notas
+</h1>
+
+<div class="flex flex-col md:flex-row gap-3 mb-6">
+
+<input
+id="dni"
+type="text"
+placeholder="Ingrese su DNI"
+class="border border-slate-300 rounded-xl p-3 w-full"
+>
+
+<button
+onclick="buscarNotas()"
+class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold"
+>
+Consultar
+</button>
+
+</div>
+
+<div id="resultado" class="hidden">
+
+<div class="bg-slate-50 rounded-xl p-4 mb-4 border">
+
+<h2 class="text-xl font-bold text-slate-800" id="nombreAlumno"></h2>
+
+<p class="text-slate-600" id="dniAlumno"></p>
+
+</div>
+
+<div class="grid md:grid-cols-3 gap-4">
+
+<div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+<h3 class="font-bold text-blue-800 mb-2">
+Competencia INDAGA
+</h3>
+
+<p id="ind1"></p>
+<p id="ind2"></p>
+
+<p class="font-semibold mt-2" id="promInd"></p>
+</div>
+
+<div class="bg-green-50 rounded-xl p-4 border border-green-200">
+
+<h3 class="font-bold text-green-800 mb-2">
+Competencia EXPLICA
+</h3>
+
+<p id="exp1"></p>
+<p id="exp2"></p>
+<p id="exp3"></p>
+
+<p class="font-semibold mt-2" id="promExp"></p>
+
+</div>
+
+<div class="bg-purple-50 rounded-xl p-4 border border-purple-200">
+
+<h3 class="font-bold text-purple-800 mb-2">
+Competencia DISEÑA
+</h3>
+
+<p id="dis1"></p>
+
+<p class="font-semibold mt-2" id="promDis"></p>
+
+</div>
 
 </div>
 
@@ -9,12 +94,14 @@
 </div>
 
 <script>
+
 let estudiantes = [];
 
 Papa.parse('5I.csv', {
     download: true,
     header: true,
     delimiter: ';',
+
     complete: function(results) {
         estudiantes = results.data;
     }
@@ -22,39 +109,76 @@ Papa.parse('5I.csv', {
 
 function buscarNotas() {
 
-    const dniIngresado = document.getElementById('dni').value.trim();
+    const dniIngresado =
+    document.getElementById('dni').value.trim();
 
     const estudiante = estudiantes.find(e =>
         e.DNI === dniIngresado
     );
 
-    const resultado = document.getElementById('resultado');
-    const mensaje = document.getElementById('mensaje');
+    const resultado =
+    document.getElementById('resultado');
+
+    const mensaje =
+    document.getElementById('mensaje');
 
     if (!estudiante) {
+
         resultado.classList.add('hidden');
-        mensaje.textContent = 'DNI no encontrado';
+
+        mensaje.textContent =
+        'DNI no encontrado';
+
         return;
     }
 
     mensaje.textContent = '';
+
     resultado.classList.remove('hidden');
 
-    document.getElementById('nombreAlumno').textContent = estudiante['APELLIDOS Y NOMBRES'];
-    document.getElementById('dniAlumno').textContent = 'DNI: ' + estudiante['DNI'];
+    document.getElementById('nombreAlumno').textContent =
+    estudiante['APELLIDOS Y NOMBRES'];
 
-    document.getElementById('ind1').textContent = 'Informe laboratorio 1: ' + estudiante['INFORME LABORATORIO 1'];
-    document.getElementById('ind2').textContent = 'Informe laboratorio 2: ' + estudiante['INFORME LABORATORIO 2'];
-    document.getElementById('promInd').textContent = 'Promedio: ' + estudiante['PROMEDIO COMPETENCIA INDAGA'];
+    document.getElementById('dniAlumno').textContent =
+    'DNI: ' + estudiante['DNI'];
 
-    document.getElementById('exp1').textContent = 'Evaluación escrita 1: ' + estudiante['EVALUACIÓN ESCRITA 1'];
-    document.getElementById('exp2').textContent = 'Evaluación escrita 2: ' + estudiante['EVALUACIÓN ESCRITA 2'];
-    document.getElementById('exp3').textContent = 'Trabajo en clase: ' + estudiante['TRABAJO EN CLASE '];
-    document.getElementById('promExp').textContent = 'Promedio: ' + estudiante['PROMEDIO COMPETENCIA EXPLICA'];
+    document.getElementById('ind1').textContent =
+    'Informe laboratorio 1: ' +
+    estudiante['INFORME LABORATORIO 1'];
 
-    document.getElementById('dis1').textContent = 'Prototipo: ' + estudiante['PROTOTIPO'];
-    document.getElementById('promDis').textContent = 'Promedio: ' + estudiante['PROMEDIO COMPETENCIA DISEÑA'];
+    document.getElementById('ind2').textContent =
+    'Informe laboratorio 2: ' +
+    estudiante['INFORME LABORATORIO 2'];
+
+    document.getElementById('promInd').textContent =
+    'Promedio: ' +
+    estudiante['PROMEDIO COMPETENCIA INDAGA'];
+
+    document.getElementById('exp1').textContent =
+    'Evaluación escrita 1: ' +
+    estudiante['EVALUACIÓN ESCRITA 1'];
+
+    document.getElementById('exp2').textContent =
+    'Evaluación escrita 2: ' +
+    estudiante['EVALUACIÓN ESCRITA 2'];
+
+    document.getElementById('exp3').textContent =
+    'Trabajo en clase: ' +
+    estudiante['TRABAJO EN CLASE '];
+
+    document.getElementById('promExp').textContent =
+    'Promedio: ' +
+    estudiante['PROMEDIO COMPETENCIA EXPLICA'];
+
+    document.getElementById('dis1').textContent =
+    'Prototipo: ' +
+    estudiante['PROTOTIPO'];
+
+    document.getElementById('promDis').textContent =
+    'Promedio: ' +
+    estudiante['PROMEDIO COMPETENCIA DISEÑA'];
 }
+
 </script>
 
 </body>
