@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+</div>
+
+</div>
+
+<p id="mensaje" class="text-center text-red-600 font-semibold mt-4"></p>
+
+</div>
+
+<script>
+let estudiantes = [];
+
+Papa.parse('5I.csv', {
+    download: true,
+    header: true,
+    delimiter: ';',
+    complete: function(results) {
+        estudiantes = results.data;
+    }
+});
+
+function buscarNotas() {
+
+    const dniIngresado = document.getElementById('dni').value.trim();
+
+    const estudiante = estudiantes.find(e =>
+        e.DNI === dniIngresado
+    );
+
+    const resultado = document.getElementById('resultado');
+    const mensaje = document.getElementById('mensaje');
+
+    if (!estudiante) {
+        resultado.classList.add('hidden');
+        mensaje.textContent = 'DNI no encontrado';
+        return;
+    }
+
+    mensaje.textContent = '';
+    resultado.classList.remove('hidden');
+
+    document.getElementById('nombreAlumno').textContent = estudiante['APELLIDOS Y NOMBRES'];
+    document.getElementById('dniAlumno').textContent = 'DNI: ' + estudiante['DNI'];
+
+    document.getElementById('ind1').textContent = 'Informe laboratorio 1: ' + estudiante['INFORME LABORATORIO 1'];
+    document.getElementById('ind2').textContent = 'Informe laboratorio 2: ' + estudiante['INFORME LABORATORIO 2'];
+    document.getElementById('promInd').textContent = 'Promedio: ' + estudiante['PROMEDIO COMPETENCIA INDAGA'];
+
+    document.getElementById('exp1').textContent = 'Evaluación escrita 1: ' + estudiante['EVALUACIÓN ESCRITA 1'];
+    document.getElementById('exp2').textContent = 'Evaluación escrita 2: ' + estudiante['EVALUACIÓN ESCRITA 2'];
+    document.getElementById('exp3').textContent = 'Trabajo en clase: ' + estudiante['TRABAJO EN CLASE '];
+    document.getElementById('promExp').textContent = 'Promedio: ' + estudiante['PROMEDIO COMPETENCIA EXPLICA'];
+
+    document.getElementById('dis1').textContent = 'Prototipo: ' + estudiante['PROTOTIPO'];
+    document.getElementById('promDis').textContent = 'Promedio: ' + estudiante['PROMEDIO COMPETENCIA DISEÑA'];
+}
+</script>
+
+</body>
+</html>
